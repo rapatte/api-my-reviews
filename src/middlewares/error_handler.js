@@ -1,5 +1,6 @@
 const { SERVER_ERROR } = require("../helpers/status_codes");
 
+// eslint-disable-next-line no-unused-vars
 module.exports = (error, request, response, next) => {
   const { errors } = error;
   let { status, message, description } = error;
