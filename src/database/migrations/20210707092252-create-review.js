@@ -31,10 +31,10 @@ module.exports = {
       genre: {
         type: Sequelize.STRING(50),
       },
-      reviewId: {
+      adminId: {
         type: Sequelize.UUID,
         references: {
-          model: "Reviews",
+          model: "Admins",
           key: "id",
         },
       },

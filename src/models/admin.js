@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasMany(models.Review, { foreignKey: "reviewId", as: "reviews" });
+      this.hasMany(models.Review, { foreignKey: "adminId", as: "admin" });
     }
   }
   Admin.init(
@@ -21,7 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       mail: DataTypes.STRING,
       password: DataTypes.STRING,
-      reviewId: DataTypes.UUID,
     },
     {
       sequelize,
