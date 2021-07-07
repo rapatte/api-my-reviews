@@ -1,4 +1,11 @@
 {
+  "scripts": {
+    "start": "node ./src/index.js",
+    "dev": "nodemon",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "sequelize": "sequelize"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
