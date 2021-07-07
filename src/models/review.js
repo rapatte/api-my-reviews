@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
+      url_name: DataTypes.STRING,
       title: DataTypes.STRING,
       resume: DataTypes.STRING,
       trailer: DataTypes.STRING,
