@@ -31,6 +31,13 @@ module.exports = {
       genre: {
         type: Sequelize.STRING(50),
       },
+      reviewId: {
+        type: Sequelize.UUID,
+        references: {
+          model: "Reviews",
+          key: "id",
+        },
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
