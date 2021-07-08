@@ -12,6 +12,7 @@ module.exports = {
       },
       title: {
         type: Sequelize.STRING(50),
+        allowNull: false,
       },
       resume: {
         type: Sequelize.STRING(500),
@@ -21,14 +22,12 @@ module.exports = {
       },
       score: {
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
       poster: {
         type: Sequelize.STRING(100),
       },
       category: {
-        type: Sequelize.STRING(50),
-      },
-      genre: {
         type: Sequelize.STRING(50),
       },
       adminId: {
