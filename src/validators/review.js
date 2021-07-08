@@ -52,12 +52,19 @@ const categoryValidation = (category) => {
   return null;
 };
 
-const genreValidation = (genre) => {
-  if (isNil(genre) || genre === "") return "Le genre doit êtr erenseigné";
-  if (typeof genre !== "string")
-    return "Le genre doit être une chaîne de caractère";
-  if (genre.length < 3 || genre.length > 26)
-    return "Le genre doit faire entre 3 et 26 caractères";
+const genresValidation = (genres) => {
+  if (isNil(genres) || genres.length === 0) {
+    return "Les genres doivent être renseignés";
+  }
+  for (let index = 0; index < genres.length; index += 1) {
+    const musicalGenre = genres[index];
+    if (typeof musicalGenre !== "string") {
+      return "Le genre doit être une chaîne de caractères";
+    }
+    if (musicalGenre.length < 3 || musicalGenre.length > 50) {
+      return `Le genre doit contenir entre 3 et 50 caractères`;
+    }
+  }
   return null;
 };
 // const musicalGenresValidation = (musicalGenres) => {
@@ -123,7 +130,7 @@ module.exports = (data) => {
   }
 
   if (genre) {
-    const genreError = genreValidation(genre);
+    const genreError = genresValidation(genre);
     if (genreError) errors.push({ field: "genre", message: genreError });
   }
 
