@@ -34,8 +34,8 @@ router.post("/", async (request, response) => {
 });
 
 router.get("/:title", async (request, response) => {
-  const dj = await getReview(request.params.name);
-  response.status(OK).json(dj);
+  const review = await getReview(request.params.title);
+  response.status(OK).json(review);
 });
 
 router.put("/:title", async (request, response) => {
