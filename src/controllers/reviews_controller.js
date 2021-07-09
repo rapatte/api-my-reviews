@@ -10,7 +10,6 @@ async function buildGenresArray(genres, reviewId) {
     if (!genre) {
       throw new NotFoundError("Ressource introuvable", "Ce genre n'existe pas");
     }
-    console.log(genres);
     return {
       reviewId,
       genreId: genreFound.id,
@@ -97,29 +96,6 @@ const reviewsController = {
     });
     return newReview;
   },
-
-  // updateReview: async (title, data) => {
-  //   const reviewFound = await Review.findOne({
-  //     where: { title },
-  //   });
-  //   if (!reviewFound) {
-  //     throw new NotFoundError(
-  //       "Ressource introuvable",
-  //       "Cette review n'existe pas"
-  //     );
-  //   }
-
-  //   await reviewFound.update(data);
-
-  //   const review = await Review.findOne({
-  //     where: {
-  //       title,
-  //     },
-  //     attributes: { exclude: ["created_at"] },
-  //   });
-
-  //   return review;
-  // },
 
   updateReview: async (title, data) => {
     const reviewFound = await Review.findOne({
