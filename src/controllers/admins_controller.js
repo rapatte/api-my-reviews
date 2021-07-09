@@ -4,7 +4,7 @@ const adminsController = {
   getAllAdmins: async () => {
     const admins = Admin.findAll({
       order: [["lastName", "ASC"]],
-      attributes: ["firstName", "lastName"],
+      attributes: ["firstName", "lastName", "id"],
       raw: true,
     });
     return admins;

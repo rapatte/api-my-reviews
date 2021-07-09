@@ -4,7 +4,7 @@ const GenresController = {
   getAllGenres: async () => {
     const Genres = await Genre.findAll({
       order: [["name", "ASC"]],
-      attributes: ["name"],
+      attributes: ["name", "id"],
       raw: true,
     });
     return Genres;

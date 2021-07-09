@@ -5,12 +5,12 @@ async function buildGenresArray(genres, reviewId) {
   const genresFromDatabase = await Genre.findAll();
   return genres.map((genre) => {
     const genreFound = genresFromDatabase.find(
-      (genreFromDatabase) => genre === genreFromDatabase.name
+      (genreFromDatabase) => genre === genreFromDatabase
     );
-
     if (!genre) {
       throw new NotFoundError("Ressource introuvable", "Ce genre n'existe pas");
     }
+    console.log(genres);
     return {
       reviewId,
       genreId: genreFound.id,
@@ -28,7 +28,7 @@ const reviewsController = {
           model: Genre,
           as: "genres",
           through: { attributes: [] },
-          attributes: ["name"],
+          attributes: ["name", "id"],
         },
         {
           model: Admin,
@@ -98,6 +98,29 @@ const reviewsController = {
     return newReview;
   },
 
+  // updateReview: async (title, data) => {
+  //   const reviewFound = await Review.findOne({
+  //     where: { title },
+  //   });
+  //   if (!reviewFound) {
+  //     throw new NotFoundError(
+  //       "Ressource introuvable",
+  //       "Cette review n'existe pas"
+  //     );
+  //   }
+
+  //   await reviewFound.update(data);
+
+  //   const review = await Review.findOne({
+  //     where: {
+  //       title,
+  //     },
+  //     attributes: { exclude: ["created_at"] },
+  //   });
+
+  //   return review;
+  // },
+
   updateReview: async (title, data) => {
     const reviewFound = await Review.findOne({
       include: [
@@ -110,6 +133,7 @@ const reviewsController = {
           model: Genre,
           as: "genres",
           through: { attributes: [] },
+          attributes: ["name"],
         },
       ],
       where: { title },
@@ -126,7 +150,6 @@ const reviewsController = {
       data.genres,
       reviewUpdated.id
     );
-
     await ReviewGenre.destroy({
       where: { reviewId: reviewUpdated.id },
     });
