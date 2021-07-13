@@ -40,10 +40,7 @@ const reviewsController = {
   },
 
   getReview: async (title) => {
-    const review = Review.findOne({
-      where: {
-        title,
-      },
+    const review = await Review.findOne({
       attributes: { exclude: ["adminId"] },
       include: [
         {
@@ -58,6 +55,7 @@ const reviewsController = {
           attributes: ["name"],
         },
       ],
+      where: { title },
     });
     if (!review) {
       throw new NotFoundError(
