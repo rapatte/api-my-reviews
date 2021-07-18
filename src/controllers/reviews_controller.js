@@ -5,7 +5,7 @@ async function buildGenresArray(genres, reviewId) {
   const genresFromDatabase = await Genre.findAll();
   return genres.map((genre) => {
     const genreFound = genresFromDatabase.find(
-      (genreFromDatabase) => genre === genreFromDatabase
+      (genreFromDatabase) => genre.name === genreFromDatabase.name
     );
     if (!genre) {
       throw new NotFoundError("Ressource introuvable", "Ce genre n'existe pas");
