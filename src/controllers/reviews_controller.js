@@ -1,3 +1,4 @@
+const Sequelize = require("sequelize");
 const { NotFoundError, BadRequestError } = require("../helpers/errors");
 const { Review, Admin, Genre, ReviewGenre } = require("../models");
 
@@ -5,7 +6,7 @@ async function buildGenresArray(genres, reviewId) {
   const genresFromDatabase = await Genre.findAll();
   return genres.map((genre) => {
     const genreFound = genresFromDatabase.find(
-      (genreFromDatabase) => genre === genreFromDatabase
+      (genreFromDatabase) => genre.name === genreFromDatabase.name
     );
     if (!genre) {
       throw new NotFoundError("Ressource introuvable", "Ce genre n'existe pas");
@@ -166,6 +167,28 @@ const reviewsController = {
       where: { title },
     });
     return {};
+  },
+
+  searchReview: async (term) => {
+    const { Op } = Sequelize;
+    const reviews = Review.findAll({
+      attributes: { exclude: ["adminId"] },
+      include: [
+        {
+          model: Genre,
+          as: "genres",
+          through: { attributes: [] },
+          attributes: ["name", "id"],
+        },
+        {
+          model: Admin,
+          as: "admins",
+          attributes: ["firstName", "lastName"],
+        },
+      ],
+      where: { title: { [Op.ilike]: `%${term}%` } },
+    });
+    return reviews;
   },
 };
 

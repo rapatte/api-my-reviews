@@ -1,5 +1,4 @@
 const express = require("express");
-
 const { OK, CREATED } = require("../helpers/status_codes");
 const {
   getAllReviews,
@@ -7,6 +6,7 @@ const {
   addReview,
   deleteReview,
   updateReview,
+  searchReview,
 } = require("../controllers/reviews_controller");
 const { reviewValidation } = require("../validators");
 const { ValidationError } = require("../helpers/errors");
@@ -59,6 +59,11 @@ router.put("/:title", async (request, response) => {
 router.delete("/:title", async (request, response) => {
   await deleteReview(request.params.title);
   response.status(OK).json({ message: "La review est supprimée avec succès" });
+});
+
+router.get("/search", async (request, response) => {
+  const review = await searchReview(request.query.term);
+  response.status(OK).json(review);
 });
 
 module.exports = router;
