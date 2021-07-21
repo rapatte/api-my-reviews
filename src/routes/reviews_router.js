@@ -7,6 +7,12 @@ const {
   deleteReview,
   updateReview,
   searchReview,
+  getLatestReviews,
+  getBestReviews,
+  getTopAnimeReviews,
+  getTopSerieReviews,
+  getTopFilmReviews,
+  getAllReviewsByTitle,
 } = require("../controllers/reviews_controller");
 const { reviewValidation } = require("../validators");
 const { ValidationError } = require("../helpers/errors");
@@ -15,6 +21,35 @@ const router = express.Router();
 
 router.get("/", async (request, response) => {
   const reviews = await getAllReviews();
+  response.status(OK).json(reviews);
+});
+
+router.get("/review/:name", async (request, response) => {
+  const { name } = request.params;
+  const reviews = await getAllReviewsByTitle(name);
+  response.status(OK).json(reviews);
+});
+
+router.get("/latest", async (request, response) => {
+  const reviews = await getLatestReviews();
+  response.status(OK).json(reviews);
+});
+
+router.get("/best", async (request, response) => {
+  const reviews = await getBestReviews();
+  response.status(OK).json(reviews);
+});
+
+router.get("/anime", async (request, response) => {
+  const reviews = await getTopAnimeReviews();
+  response.status(OK).json(reviews);
+});
+router.get("/film", async (request, response) => {
+  const reviews = await getTopFilmReviews();
+  response.status(OK).json(reviews);
+});
+router.get("/serie", async (request, response) => {
+  const reviews = await getTopSerieReviews();
   response.status(OK).json(reviews);
 });
 
@@ -61,8 +96,9 @@ router.delete("/:title", async (request, response) => {
   response.status(OK).json({ message: "La review est supprimée avec succès" });
 });
 
-router.get("/search", async (request, response) => {
-  const review = await searchReview(request.query.term);
+router.get(`/search`, async (request, response) => {
+  const { term } = request.query;
+  const review = await searchReview(term);
   response.status(OK).json(review);
 });
 

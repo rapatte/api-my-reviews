@@ -40,6 +40,28 @@ const reviewsController = {
     return reviews;
   },
 
+  getAllReviewsByTitle: async (name) => {
+    const { Op } = Sequelize;
+    const reviews = Review.findAll({
+      where: { title: { [Op.like]: `%${name}%` } },
+      attributes: { exclude: ["adminId"] },
+      include: [
+        {
+          model: Genre,
+          as: "genres",
+          through: { attributes: [] },
+          attributes: ["name", "id"],
+        },
+        {
+          model: Admin,
+          as: "admins",
+          attributes: ["firstName", "lastName"],
+        },
+      ],
+    });
+    return reviews;
+  },
+
   getReview: async (title) => {
     const review = await Review.findOne({
       attributes: { exclude: ["adminId"] },
@@ -169,7 +191,7 @@ const reviewsController = {
     return {};
   },
 
-  searchReview: async (term) => {
+  searchReview: async (title) => {
     const { Op } = Sequelize;
     const reviews = Review.findAll({
       attributes: { exclude: ["adminId"] },
@@ -186,7 +208,118 @@ const reviewsController = {
           attributes: ["firstName", "lastName"],
         },
       ],
-      where: { title: { [Op.ilike]: `%${term}%` } },
+      where: { title: { [Op.like]: `%${title}%` } },
+    });
+    return reviews;
+  },
+
+  getLatestReviews: async () => {
+    const reviews = Review.findAll({
+      limit: 5,
+      order: [["createdAt", "DESC"]],
+      attributes: { exclude: ["adminId"] },
+      include: [
+        {
+          model: Genre,
+          as: "genres",
+          through: { attributes: [] },
+          attributes: ["name", "id"],
+        },
+        {
+          model: Admin,
+          as: "admins",
+          attributes: ["firstName", "lastName"],
+        },
+      ],
+    });
+    return reviews;
+  },
+
+  getBestReviews: async () => {
+    const reviews = Review.findAll({
+      limit: 5,
+      order: [["score", "DESC"]],
+      attributes: { exclude: ["adminId"] },
+      include: [
+        {
+          model: Genre,
+          as: "genres",
+          through: { attributes: [] },
+          attributes: ["name", "id"],
+        },
+        {
+          model: Admin,
+          as: "admins",
+          attributes: ["firstName", "lastName"],
+        },
+      ],
+    });
+    return reviews;
+  },
+
+  getTopAnimeReviews: async () => {
+    const reviews = Review.findAll({
+      limit: 5,
+      order: [["score", "DESC"]],
+      where: { category: "anime" },
+      attributes: { exclude: ["adminId"] },
+      include: [
+        {
+          model: Genre,
+          as: "genres",
+          through: { attributes: [] },
+          attributes: ["name", "id"],
+        },
+        {
+          model: Admin,
+          as: "admins",
+          attributes: ["firstName", "lastName"],
+        },
+      ],
+    });
+    return reviews;
+  },
+  getTopFilmReviews: async () => {
+    const reviews = Review.findAll({
+      limit: 5,
+      order: [["score", "DESC"]],
+      where: { category: "film" },
+      attributes: { exclude: ["adminId"] },
+      include: [
+        {
+          model: Genre,
+          as: "genres",
+          through: { attributes: [] },
+          attributes: ["name", "id"],
+        },
+        {
+          model: Admin,
+          as: "admins",
+          attributes: ["firstName", "lastName"],
+        },
+      ],
+    });
+    return reviews;
+  },
+  getTopSerieReviews: async () => {
+    const reviews = Review.findAll({
+      limit: 5,
+      order: [["score", "DESC"]],
+      where: { category: "serie" },
+      attributes: { exclude: ["adminId"] },
+      include: [
+        {
+          model: Genre,
+          as: "genres",
+          through: { attributes: [] },
+          attributes: ["name", "id"],
+        },
+        {
+          model: Admin,
+          as: "admins",
+          attributes: ["firstName", "lastName"],
+        },
+      ],
     });
     return reviews;
   },
