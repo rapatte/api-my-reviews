@@ -28,10 +28,7 @@ const adminsController = {
       },
     });
     if (!user) {
-      throw new NotFoundError(
-        "Ressource introuvable",
-        "Cet utilisateur n'existe pas"
-      );
+      throw new NotFoundError("Ressource introuvable", "Email incorrect");
     }
 
     const correct = await bcrypt.compare(password, user.password);
