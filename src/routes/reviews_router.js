@@ -16,6 +16,7 @@ const {
 } = require("../controllers/reviews_controller");
 const { reviewValidation } = require("../validators");
 const { ValidationError } = require("../helpers/errors");
+const isAuth = require("../middlewares/isAuth");
 
 const router = express.Router();
 
@@ -53,7 +54,7 @@ router.get("/serie", async (request, response) => {
   response.status(OK).json(reviews);
 });
 
-router.post("/", async (request, response) => {
+router.post("/", isAuth, async (request, response) => {
   const review = request.body;
   const errors = reviewValidation(review);
   if (errors) throw new ValidationError(errors);
@@ -73,7 +74,7 @@ router.get("/:title", async (request, response) => {
   response.status(OK).json(review);
 });
 
-router.put("/:title", async (request, response) => {
+router.put("/:title", isAuth, async (request, response) => {
   const review = request.body;
   const errors = reviewValidation(review);
   if (errors) throw new ValidationError(errors);
@@ -91,7 +92,7 @@ router.put("/:title", async (request, response) => {
   response.status(OK).json(reviewUpdated);
 });
 
-router.delete("/:title", async (request, response) => {
+router.delete("/:title", isAuth, async (request, response) => {
   await deleteReview(request.params.title);
   response.status(OK).json({ message: "La review est supprimée avec succès" });
 });
