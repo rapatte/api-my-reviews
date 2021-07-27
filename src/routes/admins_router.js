@@ -22,7 +22,7 @@ router.post("/", async (request, response) => {
 });
 
 router.post("/login", async (request, response) => {
-  const user = await login(request.body.mail, request.body.password);
+  const user = await login(request.body.email, request.body.password);
   const MAXAGE = Math.floor(Date.now() / 1000) + 60 * 60; // 1 hour of expiration
   response.cookie("authcookie", user.token, { maxAge: MAXAGE });
   response.status(OK).json({ user, token: user.token });
