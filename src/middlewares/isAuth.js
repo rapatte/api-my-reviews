@@ -7,13 +7,13 @@ const isAuth = (request, response, next) => {
 
   jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
     if (error) {
-      throw new UnauthorizedError("You must be login");
+      throw new UnauthorizedError("Vous devez être connecté");
     } else {
       const { exp } = user;
       if (Date.now() / 1000 >= exp) {
         response.clearCookie("authcookie");
 
-        throw new UnauthorizedError("You must be login");
+        throw new UnauthorizedError("Vous devez être connecté");
       }
 
       request.user = user;
