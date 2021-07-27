@@ -21,14 +21,14 @@ const adminsController = {
     });
     return admins;
   },
-  login: async (mail, password) => {
+  login: async (email, password) => {
     const user = await Admin.findOne({
       where: {
-        mail,
+        mail: email,
       },
     });
     if (!user) {
-      throw new NotFoundError("Ressource introuvable", "Email incorrect");
+      throw new NotFoundError("Email incorrect", "Ressource introuvable");
     }
 
     const correct = await bcrypt.compare(password, user.password);
