@@ -7,7 +7,7 @@ module.exports = (error, request, response, next) => {
 
   if (!status) {
     status = SERVER_ERROR;
-    message = "Oups ! Quelque chose ne fonctionne pas !";
+    message = "Oups ! Le serveur a un problème !";
     description =
       "Le serveur rencontre un problème technique. Veuillez réessayer plus tard.";
   }
