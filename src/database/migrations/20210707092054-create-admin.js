@@ -9,15 +9,19 @@ module.exports = {
       },
       mail: {
         type: Sequelize.STRING(100),
+        allowNull: false,
       },
       password: {
         type: Sequelize.STRING(250),
+        allowNull: false,
       },
       firstName: {
         type: Sequelize.STRING(50),
+        allowNull: false,
       },
       lastName: {
         type: Sequelize.STRING(50),
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

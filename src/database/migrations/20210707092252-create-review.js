@@ -16,9 +16,11 @@ module.exports = {
       },
       resume: {
         type: Sequelize.STRING(500),
+        allowNull: false,
       },
       trailer: {
         type: Sequelize.STRING(100),
+        allowNull: false,
       },
       score: {
         type: Sequelize.INTEGER,
@@ -26,9 +28,11 @@ module.exports = {
       },
       poster: {
         type: Sequelize.STRING(100),
+        allowNull: false,
       },
       category: {
         type: Sequelize.STRING(50),
+        allowNull: false,
       },
       adminId: {
         type: Sequelize.UUID,
