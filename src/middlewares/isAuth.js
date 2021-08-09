@@ -1,12 +1,15 @@
+/* eslint-disable node/no-unsupported-features/es-syntax */
+/* eslint-disable no-undef */
 const jwt = require("jsonwebtoken");
 const { UnauthorizedError } = require("../helpers/errors");
 
 const isAuth = (request, response, next) => {
-  // const token = request.cookies.authcookie;
-  const token = request.headers.authorization.split("Bearer ")[1];
+  // const token = request.headers.cookie.split("authcookie=")[1]; // appels via postman
+  const token = request.headers.authorization.split("Bearer ")[1]; // appels via navigateur
 
   jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
     if (error) {
+      console.log(error);
       throw new UnauthorizedError("Vous devez être connecté");
     } else {
       const { exp } = user;
@@ -15,7 +18,6 @@ const isAuth = (request, response, next) => {
 
         throw new UnauthorizedError("Vous devez être connecté");
       }
-
       request.user = user;
       next();
     }
