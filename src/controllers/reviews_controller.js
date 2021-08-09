@@ -59,6 +59,12 @@ const reviewsController = {
         },
       ],
     });
+    if (!reviews) {
+      throw new NotFoundError(
+        "Ressource introuvable",
+        "Cette review n'existe pas"
+      );
+    }
     return reviews;
   },
 
@@ -82,8 +88,8 @@ const reviewsController = {
     });
     if (!review) {
       throw new NotFoundError(
-        "Ressource introuvable",
-        "Cette review n'existe pas"
+        "Cette review n'existe pas",
+        "Ressource introuvable"
       );
     }
     return review;
@@ -98,8 +104,8 @@ const reviewsController = {
     });
     if (review) {
       throw new BadRequestError(
-        "Ressource existante",
-        "Cette review existe déjà"
+        "Cette review existe déjà",
+        "Ressource existante"
       );
     }
     const newReview = await Review.create(data);
@@ -109,7 +115,7 @@ const reviewsController = {
       },
     });
     if (!genre) {
-      throw new NotFoundError("Ressource introuvable", "Ce genre n'existe pas");
+      throw new NotFoundError("Ce genre n'existe pas", "Ressource introuvable");
     }
     await ReviewGenre.create({
       reviewId: newReview.id,
