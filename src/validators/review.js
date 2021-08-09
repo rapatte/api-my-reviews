@@ -20,7 +20,7 @@ const resumeValidation = (resume) => {
 
 const scoreValidation = (score) => {
   if (isNil(score) || score === "") return "La note doit être renseignée";
-  if (typeof score !== "number") return "La note doit être un nombre";
+  if (Number.isNaN(score)) return "La note doit être un nombre";
   if (score > 20 || score < 0)
     return "La note doit être comprise entre 0 et 20";
   return null;
@@ -52,49 +52,19 @@ const categoryValidation = (category) => {
   return null;
 };
 
-const genresValidation = (genres) => {
-  if (isNil(genres) || genres.length === 0) {
-    return "Les genres doivent être renseignés";
+const genresValidation = (genre) => {
+  if (isNil(genre) || genre.length === 0) {
+    return "Les genre doivent être renseignés";
   }
-  for (let index = 0; index < genres.length; index += 1) {
-    const musicalGenre = genres[index];
-    if (typeof musicalGenre !== "string") {
-      return "Le genre doit être une chaîne de caractères";
-    }
-    if (musicalGenre.length < 3 || musicalGenre.length > 50) {
-      return `Le genre doit contenir entre 3 et 50 caractères`;
-    }
+  if (genre.length < 1 || genre.length > 50) {
+    return `Le genre doit contenir entre 3 et 50 caractères`;
   }
+  if (genre === undefined) {
+    return `Ce genre n'existe pas`;
+  }
+
   return null;
 };
-// const musicalGenresValidation = (musicalGenres) => {
-//   if (isNil(musicalGenres) || musicalGenres.length === 0) {
-//     return "Les genres de musique doivent être renseignés";
-//   }
-//   for (let index = 0; index < musicalGenres.length; index += 1) {
-//     const musicalGenre = musicalGenres[index];
-//     if (typeof musicalGenre !== "string") {
-//       return "Le genre de musique doit être une chaîne de caractères";
-//     }
-//     if (musicalGenre.length < 3 || musicalGenre.length > 50) {
-//       return `Le genre de musique doit contenir entre 3 et 50 caractères`;
-//     }
-//   }
-//   return null;
-// };
-
-// const socialNetworkValidation = (socialNetworkData, socialNetworkName) => {
-//   if (isNil(socialNetworkData) || socialNetworkData === "") {
-//     return `Le nom d'utilisateur du compte ${socialNetworkName} doit être renseignée`;
-//   }
-//   if (typeof socialNetworkData !== "string") {
-//     return `L'url de la photo de profil doit être une chaîne de caractères`;
-//   }
-//   if (socialNetworkData.length < 10 || socialNetworkData.length > 2083) {
-//     return `L'url de la photo de profil doit contenir entre 10 et 255 caractères`;
-//   }
-//   return null;
-// };
 
 module.exports = (data) => {
   /* eslint-disable camelcase */
