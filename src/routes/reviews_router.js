@@ -1,3 +1,4 @@
+/* eslint-disable node/no-unsupported-features/es-syntax */
 const express = require("express");
 const { OK, CREATED } = require("../helpers/status_codes");
 const {
@@ -60,7 +61,6 @@ router.post("/", isAuth, async (request, response) => {
   if (errors) throw new ValidationError(errors);
 
   const reviewToAdd = {
-    // eslint-disable-next-line node/no-unsupported-features/es-syntax
     ...review,
     url_name: review.title.toLowerCase().replace(/ /g, "-"),
   };
@@ -80,7 +80,6 @@ router.put("/:title", isAuth, async (request, response) => {
   if (errors) throw new ValidationError(errors);
 
   const reviewToUpdate = {
-    // eslint-disable-next-line node/no-unsupported-features/es-syntax
     ...review,
     url_name: review.title.toLowerCase().replace(/ /g, "-"),
   };
