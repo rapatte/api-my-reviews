@@ -40,10 +40,15 @@ const reviewsController = {
     return reviews;
   },
 
-  getAllReviewsByTitle: async (name) => {
+  getAllReviewsByTitle: async (search) => {
     const { Op } = Sequelize;
     const reviews = Review.findAll({
-      where: { title: { [Op.like]: `%${name}%` } },
+      where: {
+        [Op.or]: [
+          { title: { [Op.like]: `%${search}%` } },
+          { category: search },
+        ],
+      },
       attributes: { exclude: ["adminId"] },
       include: [
         {
