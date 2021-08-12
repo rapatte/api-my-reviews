@@ -113,7 +113,6 @@ const reviewsController = {
         "Ressource existante"
       );
     }
-    const newReview = await Review.create(data);
     const genre = await Genre.findOne({
       where: {
         name: data.genre[0],
@@ -122,6 +121,7 @@ const reviewsController = {
     if (!genre) {
       throw new NotFoundError("Ce genre n'existe pas", "Ressource introuvable");
     }
+    const newReview = await Review.create(data);
     await ReviewGenre.create({
       reviewId: newReview.id,
       genreId: genre.id,
