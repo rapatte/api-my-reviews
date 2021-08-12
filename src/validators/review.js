@@ -54,7 +54,7 @@ const categoryValidation = (category) => {
 
 const genresValidation = (genre) => {
   if (isNil(genre) || genre.length === 0) {
-    return "Les genre doivent être renseignés";
+    return "Le genre doit être renseigné";
   }
   if (genre.length < 1 || genre.length > 50) {
     return `Le genre doit contenir entre 3 et 50 caractères`;
