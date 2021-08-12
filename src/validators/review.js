@@ -18,19 +18,19 @@ const resumeValidation = (resume) => {
   return null;
 };
 
-const scoreValidation = (score) => {
-  if (isNil(score) || score === "") return "La note doit être renseignée";
-  if (Number.isNaN(score)) return "La note doit être un nombre";
-  if (score > 20 || score < 0)
-    return "La note doit être comprise entre 0 et 20";
-  return null;
-};
-
 const trailerValidation = (trailer) => {
   if (isNil(trailer) || trailer === "")
     return "L'url du trailer doit être renseigné";
   if (typeof trailer !== "string")
     return "L'url du trailer doit être une chaîne de caractère";
+  return null;
+};
+
+const scoreValidation = (score) => {
+  if (isNil(score) || score === "") return "La note doit être renseignée";
+  if (Number.isNaN(score)) return "La note doit être un nombre";
+  if (score > 20 || score < 0)
+    return "La note doit être comprise entre 0 et 20";
   return null;
 };
 
@@ -53,7 +53,7 @@ const categoryValidation = (category) => {
 };
 
 const genresValidation = (genre) => {
-  if (isNil(genre) || genre.length === 0) {
+  if (isNil(genre) || genre.length === 0 || genre === "" || genre === [""]) {
     return "Le genre doit être renseigné";
   }
   if (genre.length < 1 || genre.length > 50) {
@@ -78,31 +78,20 @@ module.exports = (data) => {
   const resumeError = resumeValidation(resume);
   if (resumeError) errors.push({ field: "resume", message: resumeError });
 
-  if (score) {
-    const scoreError = scoreValidation(score);
-    if (scoreError) errors.push({ field: "score", message: scoreError });
-  }
+  const trailerError = trailerValidation(trailer);
+  if (trailerError) errors.push({ field: "trailer", message: trailerError });
 
-  if (trailer) {
-    const trailerError = trailerValidation(trailer);
-    if (trailerError) errors.push({ field: "trailer", message: trailerError });
-  }
+  const scoreError = scoreValidation(score);
+  if (scoreError) errors.push({ field: "score", message: scoreError });
 
-  if (poster) {
-    const posterError = posterValidation(poster);
-    if (posterError) errors.push({ field: "poster", message: posterError });
-  }
+  const posterError = posterValidation(poster);
+  if (posterError) errors.push({ field: "poster", message: posterError });
 
-  if (category) {
-    const categoryError = categoryValidation(category);
-    if (categoryError)
-      errors.push({ field: "category", message: categoryError });
-  }
+  const categoryError = categoryValidation(category);
+  if (categoryError) errors.push({ field: "category", message: categoryError });
 
-  if (genre) {
-    const genreError = genresValidation(genre);
-    if (genreError) errors.push({ field: "genre", message: genreError });
-  }
+  const genreError = genresValidation(genre);
+  if (genreError) errors.push({ field: "genre", message: genreError });
 
   return errors.length > 0 ? errors : null;
 };
