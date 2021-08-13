@@ -55,7 +55,7 @@ router.get("/serie", async (request, response) => {
   response.status(OK).json(reviews);
 });
 
-router.post("/", isAuth, async (request, response) => {
+router.post("/", async (request, response) => {
   const review = request.body;
   const errors = reviewValidation(review);
   if (errors) throw new ValidationError(errors);
@@ -74,16 +74,16 @@ router.get("/:title", async (request, response) => {
   response.status(OK).json(review);
 });
 
-router.put("/:title", isAuth, async (request, response) => {
+router.put("/:title", async (request, response) => {
   const review = request.body;
   const errors = reviewValidation(review);
-  if (errors) throw new ValidationError(errors);
 
   const reviewToUpdate = {
     ...review,
     url_name: review.title.toLowerCase().replace(/ /g, "-"),
   };
 
+  if (errors) throw new ValidationError(errors);
   const reviewUpdated = await updateReview(
     request.params.title,
     reviewToUpdate

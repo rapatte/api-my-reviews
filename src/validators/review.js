@@ -53,23 +53,20 @@ const categoryValidation = (category) => {
 };
 
 const genresValidation = (genre) => {
-  if (isNil(genre) || genre.length === 0 || genre === "" || genre === [""]) {
+  if (
+    genre === null ||
+    genre === [{ name: "" }] ||
+    genre === [""] ||
+    genre === []
+  ) {
     return "Le genre doit être renseigné";
-  }
-  if (genre.length < 1 || genre.length > 50) {
-    return `Le genre doit contenir entre 3 et 50 caractères`;
-  }
-  if (genre === undefined) {
-    return `Ce genre n'existe pas`;
   }
 
   return null;
 };
 
 module.exports = (data) => {
-  /* eslint-disable camelcase */
   const { title, resume, score, trailer, poster, category, genre } = data;
-  /* eslint-enable camelcase */
   const errors = [];
 
   const titleError = titleValidation(title);
