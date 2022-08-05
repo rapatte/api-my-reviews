@@ -1,2 +1,2 @@
-# api-bebito-reviews
+# api-reviews
 Api servant au projet final Simplon
